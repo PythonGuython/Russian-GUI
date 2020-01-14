@@ -12,6 +12,7 @@ class StudySets():
         self.study_sets = ['set1','set2','set3']
         self.current_set = ''
 
+#Creates an instance of StudySets so i can globally store my selection. This seems like a bad solution
 studyset_obj = StudySets()
 
 
@@ -36,7 +37,11 @@ class SelectionPage(Page):
 
         for study_set in studyset_obj.study_sets:
             listbox.insert(tk.END, study_set)
-
+            
+#Here is where i'm having trouble. listbox.get(tk.ACTIVE) returns the selected item from the list, but I want to display
+#and use that item in the StudyPage class. My current method seems bad and it is limiting. I can use this method to print
+#the selected set on the StudyPage, but i can't figure out how to create a label that displays the selected study set
+#I think i'm supposed to use the StringVar() method, but i'm stuck
         def study_button():
             studypage = controller.pages['StudyPage']
             studypage.show()
@@ -73,7 +78,7 @@ class MainView(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
-        # Create dictionary of Page subclasses.
+        # Create dictionary of Page subclasses that allows me to navigate the pages in the app
         self.pages = {}
         for Subclass in (StudyPage, SelectionPage, ModifyPage):
             self.pages[Subclass.__name__] = Subclass(self)
